@@ -1,0 +1,87 @@
+{
+  "name": "v-demo-two",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/v-demo-two/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/v-demo-two"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "v-demo-two:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "v-demo-two:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "v-demo-two:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "v-demo-two:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "v-demo-two:build:development"
+        },
+        "production": {
+          "buildTarget": "v-demo-two:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/apps/v-demo-two"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/v-demo-two"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/v-demo-two/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "v-demo-two:build"
+      }
+    },
+    "component-test": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/v-demo-two/cypress.config.ts",
+        "testingType": "component",
+        "devServerTarget": "v-demo-two:build",
+        "skipServe": true
+      }
+    }
+  },
+  "tags": []
+}
